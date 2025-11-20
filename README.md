@@ -11,7 +11,7 @@ python-dotenv==1.0.0
 
 
 # 接口 URL：
-http://172.70.10.53:29511/refresh-embeddings
+http://.../refresh-embeddings
 
 # 请求方式：
 POST
@@ -28,10 +28,10 @@ POST
   "vector_field_name": ""
 }
 # 向量刷新接口请求体字段
-db_ip：string 类型，必选，无默认值。PostgreSQL 数据库 IP 地址（如：172.70.10.163，确保容器可访问）。
+db_ip：string 类型，必选，无默认值。PostgreSQL 数据库 IP 地址。
 db_port：integer 类型，必选，默认值 5432。PostgreSQL 数据库端口（默认 5432，若修改过需对应调整）。
-db_name：string 类型，必选，无默认值。目标数据库名称（如：nlp_service，需提前创建并安装 vector 扩展）。
-table_name：string 类型，必选，无默认值。目标表名（如：konx_pg_embedding，需符合数据库表名规范）。
+db_name：string 类型，必选，无默认值。目标数据库名称。
+table_name：string 类型，必选，无默认值。目标表名。
 text_field_name：string 类型，必选，无默认值。文本字段名（存储需生成向量的原始文本，如：text_content,需要跟数据库字段名匹配）。
 vector_field_name：string 类型，必选，无默认值。向量字段名（存储生成的高维向量，如：embedding，类型需为 VECTOR (1024) 需要跟数据库字段名匹配）。
 
