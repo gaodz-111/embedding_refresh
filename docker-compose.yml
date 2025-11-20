@@ -1,0 +1,34 @@
+version: '3.8'  # 兼容 Docker Compose 版本 ≥ 1.27.0
+
+services:
+  embedding-refresh-service:
+    # 镜像名称（需先执行 docker build -t embedding_refresh:v1 构建）
+    image: embedding_refresh:v1
+    # 容器名称（自定义，与之前保持一致）
+    container_name: embedding_refresh_service
+    # 工作目录（与 Dockerfile 中定义的 WORKDIR 一致）
+    working_dir: /app
+    # 端口映射：宿主机端口 29511 ↔ 容器内端口 8000（可按需修改宿主机端口）
+    ports:
+      - "29511:8000"
+    # 环境变量配置（替代 .env 文件，支持直接在这里定义，也可挂载 .env 文件）
+    environment:
+      # 向量服务核心配置（需替换为实际有效值）
+
+    restart: unless-stopped
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+    deploy:
+      resources:
+        limits:
+          cpus: '1'  # 限制使用 1 个 CPU 核心
+          memory: 2G  # 限制使用 2GB 内存
+        reservations:
+          cpus: '0.5'  # 预留 0.5 个 CPU 核心
+          memory: 1G  # 预留 1GB 内存
+    # 日志配置（可选，控制日志输出大小和轮转）
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"  # 单个日志文件最大 10MB
+        max-file: "3"    # 最多保留 3 个日志文件（超过自动轮转）
